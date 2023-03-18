@@ -3,8 +3,9 @@
 namespace Webboy\OpenAiApiClient\Endpoints;
 
 use GuzzleHttp\Client;
+use Webboy\OpenAiApiClient\OpenAIClient;
 
-class OpenAIChat extends \Webboy\OpenAiApiClient\OpenAIClient implements Interfaces\EndpointCreateInterface
+class OpenAIChat extends OpenAIClient
 {
 
     public function __construct(string $apiKey, ?Client $client = null)

@@ -9,64 +9,69 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 use Webboy\OpenAiApiClient\Endpoints\OpenAICompletions;
+use Webboy\OpenAiApiClient\Exceptions\OpenAIClientException;
 
 class OpenAICompletionsTest extends TestCase
 {
     /**
      * @throws GuzzleException
+     * @throws OpenAIClientException
      */
     public function testCreateCompletion(): void
     {
         $apiKey = 'test_api_key';
 
-        // Create a mock response
-        $mockResponse = new Response(200, [], json_encode([
-            'id' => 'completion_1',
+        $data_array = [
+            'id' => 'test_completion_id',
             'object' => 'completion',
+            'created' => time(),
+            'model' => 'text-davinci-002',
+            'usage' => [
+                'prompt_tokens' => 10,
+                'completion_tokens' => 20,
+                'total_tokens' => 30,
+            ],
             'choices' => [
                 [
-                    'text' => 'Test response',
+                    'text' => 'Once upon a time, there was a little village.',
+                    'index' => 0,
+                    'logprobs' => null,
+                    'finish_reason' => 'stop',
                 ],
             ],
-        ]));
-
-        // Create a MockHandler and add the mock response
-        $mockHandler = new MockHandler([
-            $mockResponse,
-        ]);
-
-        // Create a HandlerStack with the mock handler
-        $handlerStack = HandlerStack::create($mockHandler);
-
-        // Create a Guzzle client with the handler stack
-        $guzzleClient = new Client(['handler' => $handlerStack]);
-
-        // Instantiate the OpenAICompletions with the mocked Guzzle client
-        $completionsClient = new OpenAICompletions($apiKey, $guzzleClient);
-
-        // Define the data to send
-        $data = [
-            'model' => 'text-davinci-002',
-            'prompt' => 'Hello,',
-            'max_tokens' => 5,
         ];
 
-        // Call the create method
-        $response = $completionsClient->create($data);
+        $mockResponse = json_encode($data_array);
 
-        // Assert that the response matches the expected result
-        $this->assertSame(
-            [
-                'id' => 'completion_1',
-                'object' => 'completion',
-                'choices' => [
-                    [
-                        'text' => 'Test response',
-                    ],
-                ],
-            ],
-            $response
-        );
+        $mock = new MockHandler([
+            new Response(200, ['Content-Type' => 'application/json'], $mockResponse),
+        ]);
+
+        $handlerStack = HandlerStack::create($mock);
+        $client = new Client(['handler' => $handlerStack]);
+
+        $completionsClient = new OpenAICompletions($apiKey, $client);
+
+        $model = 'text-davinci-002';
+        $options['prompt'] = 'Once upon a time';
+
+        $response = $completionsClient->createCompletion($model, $options);
+
+        $this->assertIsArray($response);
+        $this->assertArrayHasKey('id', $response);
+        $this->assertArrayHasKey('object', $response);
+        $this->assertArrayHasKey('created', $response);
+        $this->assertArrayHasKey('model', $response);
+        $this->assertArrayHasKey('usage', $response);
+        $this->assertArrayHasKey('choices', $response);
+        $this->assertCount(1, $response['choices']);
+        $this->assertArrayHasKey('text', $response['choices'][0]);
+        $this->assertArrayHasKey('index', $response['choices'][0]);
+        $this->assertArrayHasKey('logprobs', $response['choices'][0]);
+        $this->assertArrayHasKey('finish_reason', $response['choices'][0]);
+        $this->assertEquals('test_completion_id', $response['id']);
+        $this->assertEquals('completion', $response['object']);
+        $this->assertEquals('text-davinci-002', $response['model']);
     }
 }
 

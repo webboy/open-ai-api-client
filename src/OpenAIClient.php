@@ -14,6 +14,14 @@ class OpenAIClient
     protected string $baseUrl = 'https://api.openai.com/v1/';
     protected Client $client;
 
+    protected float $timeout = 0.0;
+    protected float $connectTimeout = 0.0;
+    protected bool $httpErrors = true;
+
+    /**
+     * @param string $apiKey
+     * @param Client|null $client
+     */
     public function __construct(
         private string $apiKey,
         ?Client $client = null
@@ -23,9 +31,48 @@ class OpenAIClient
     }
 
     /**
-     * @throws Exception|GuzzleException
+     * @param float $timeout
+     * @return OpenAIClient
      */
-    public function sendRequest($method, $endpoint, $data = [])
+    public function setTimeout(float $timeout): self
+    {
+        $this->timeout = $timeout;
+
+        return $this;
+    }
+
+    /**
+     * @param float $connectTimeout
+     * @return OpenAIClient
+     */
+    public function setConnectTimeout(float $connectTimeout): self
+    {
+        $this->connectTimeout = $connectTimeout;
+
+        return $this;
+    }
+
+    /**
+     * @param bool $httpErrors
+     * @return OpenAIClient
+     */
+    public function setHttpErrors(bool $httpErrors): self
+    {
+        $this->httpErrors = $httpErrors;
+
+        return $this;
+    }
+
+
+    /**
+     * @param $method
+     * @param $endpoint
+     * @param array $data
+     * @return mixed
+     * @throws GuzzleException
+     * @throws OpenAIClientException
+     */
+    public function sendRequest($method, $endpoint, array $data = []): mixed
     {
         $headers = [
             'Content-Type' => 'application/json',

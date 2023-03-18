@@ -4,11 +4,10 @@ namespace Webboy\OpenAiApiClient\Endpoints;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use Webboy\OpenAiApiClient\Endpoints\Interfaces\EndpointGetInterface;
-use Webboy\OpenAiApiClient\Endpoints\Interfaces\EndpointListInterface;
+use Webboy\OpenAiApiClient\Exceptions\OpenAIClientException;
 use Webboy\OpenAiApiClient\OpenAIClient;
 
-class OpenAIModels extends OpenAIClient implements EndpointListInterface,EndpointGetInterface
+class OpenAIModels extends OpenAIClient
 {
     public function __construct(string $apiKey, ?Client $client = null)
     {
@@ -16,7 +15,7 @@ class OpenAIModels extends OpenAIClient implements EndpointListInterface,Endpoin
     }
 
     /**
-     * @throws GuzzleException
+     * @throws GuzzleException|OpenAIClientException
      */
     public function list(): array
     {
@@ -25,7 +24,7 @@ class OpenAIModels extends OpenAIClient implements EndpointListInterface,Endpoin
     }
 
     /**
-     * @throws GuzzleException
+     * @throws GuzzleException|OpenAIClientException
      */
     public function get(string $id): array
     {
