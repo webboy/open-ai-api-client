@@ -9,9 +9,8 @@ use Webboy\OpenAiApiClient\Exceptions\OpenAIClientException;
 use Webboy\OpenAiApiClient\Exceptions\OpenAIInvalidParameterException;
 use Webboy\OpenAiApiClient\OpenAIClient;
 
-class OpenAIChat extends OpenAIClient implements EndpointCreateInterface
+class OpenAIEdits extends OpenAIClient implements EndpointCreateInterface
 {
-
     /**
      * @param string $apiKey
      * @param Client|null $client
@@ -27,32 +26,25 @@ class OpenAIChat extends OpenAIClient implements EndpointCreateInterface
      * @throws GuzzleException
      * @throws OpenAIClientException
      */
-    public function create(array $options  = []): array
+    public function create(array $options = []): array
     {
         // Check if required options are present
         if (!isset($options['model'])) {
             throw new OpenAIInvalidParameterException('The "model" option is required.');
         }
-
-        if (!isset($options['messages']) || !is_array($options['messages'])) {
-            throw new OpenAIInvalidParameterException('The "messages" option is required and must be an array.');
+        if (!isset($options['instruction'])) {
+            throw new OpenAIInvalidParameterException('The "instruction" option is required.');
         }
 
-        $endpoint = 'chat/completions';
+        $endpoint = 'edits';
 
         $allowedOptions = [
             'model',
-            'messages',
+            'input',
+            'instruction',
+            'n',
             'temperature',
             'top_p',
-            'n',
-            'stream',
-            'stop',
-            'max_tokens',
-            'presence_penalty',
-            'frequency_penalty',
-            'logit_bias',
-            'user',
         ];
 
         // Filter options to only include allowed keys
@@ -61,3 +53,4 @@ class OpenAIChat extends OpenAIClient implements EndpointCreateInterface
         return $this->sendRequest('POST', $endpoint, $filteredOptions);
     }
 }
+

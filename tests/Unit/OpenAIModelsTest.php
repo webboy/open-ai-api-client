@@ -7,18 +7,17 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use PHPUnit\Framework\TestCase;
+use OpenAIUnitTestCase;
 use Webboy\OpenAiApiClient\Endpoints\OpenAIModels;
+use Webboy\OpenAiApiClient\Exceptions\OpenAIClientException;
 
-class OpenAIModelsTest extends TestCase
+class OpenAIModelsTest extends OpenAIUnitTestCase
 {
     /**
-     * @throws GuzzleException
+     * @throws GuzzleException|OpenAIClientException
      */
     public function testListModels(): void
     {
-        $apiKey = 'test_api_key';
-
         $data_array = [
             'data' => [
                 ['id' => 'model_1', 'object' => 'model'],
@@ -41,7 +40,7 @@ class OpenAIModelsTest extends TestCase
         $guzzleClient = new Client(['handler' => $handlerStack]);
 
         // Instantiate the OpenAIModels with the mocked Guzzle client
-        $modelsClient = new OpenAIModels($apiKey, $guzzleClient);
+        $modelsClient = new OpenAIModels($this->apiKey, $guzzleClient);
 
         // Call the list method
         $response = $modelsClient->list();
@@ -54,7 +53,7 @@ class OpenAIModelsTest extends TestCase
     }
 
     /**
-     * @throws GuzzleException
+     * @throws GuzzleException|OpenAIClientException
      */
     public function testGetModel(): void
     {

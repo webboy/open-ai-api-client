@@ -9,7 +9,7 @@ use Webboy\OpenAiApiClient\Exceptions\OpenAIClientException;
 use Webboy\OpenAiApiClient\Exceptions\OpenAIInvalidParameterException;
 use Webboy\OpenAiApiClient\OpenAIClient;
 
-class OpenAIChat extends OpenAIClient implements EndpointCreateInterface
+class OpenAIEmbeddings extends OpenAIClient implements EndpointCreateInterface
 {
 
     /**
@@ -33,25 +33,15 @@ class OpenAIChat extends OpenAIClient implements EndpointCreateInterface
         if (!isset($options['model'])) {
             throw new OpenAIInvalidParameterException('The "model" option is required.');
         }
-
-        if (!isset($options['messages']) || !is_array($options['messages'])) {
-            throw new OpenAIInvalidParameterException('The "messages" option is required and must be an array.');
+        if (!isset($options['input'])) {
+            throw new OpenAIInvalidParameterException('The "input" option is required.');
         }
 
-        $endpoint = 'chat/completions';
+        $endpoint = 'embeddings';
 
         $allowedOptions = [
             'model',
-            'messages',
-            'temperature',
-            'top_p',
-            'n',
-            'stream',
-            'stop',
-            'max_tokens',
-            'presence_penalty',
-            'frequency_penalty',
-            'logit_bias',
+            'input',
             'user',
         ];
 
@@ -61,3 +51,4 @@ class OpenAIChat extends OpenAIClient implements EndpointCreateInterface
         return $this->sendRequest('POST', $endpoint, $filteredOptions);
     }
 }
+

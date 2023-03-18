@@ -7,14 +7,15 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use PHPUnit\Framework\TestCase;
+use OpenAIUnitTestCase;
 use Webboy\OpenAiApiClient\Exceptions\OpenAIClientException;
 use Webboy\OpenAiApiClient\OpenAIClient;
 
-class OpenAIClientTest extends TestCase
+class OpenAIClientTest extends OpenAIUnitTestCase
 {
     /**
      * @throws GuzzleException
+     * @throws OpenAIClientException
      */
     public function testSendRequest(): void
     {
@@ -35,7 +36,7 @@ class OpenAIClientTest extends TestCase
         $guzzleClient = new Client(['handler' => $handlerStack]);
 
         // Instantiate the OpenAIClient with the mocked Guzzle client
-        $client = new OpenAIClient('test_api_key', client: $guzzleClient);
+        $client = new OpenAIClient($this->apiKey, client: $guzzleClient);
 
         // Call the sendRequest method
         $response = $client->sendRequest('GET', 'test/endpoint');
@@ -49,8 +50,6 @@ class OpenAIClientTest extends TestCase
      */
     public function testSendRequestException(): void
     {
-        $apiKey = 'test_api_key';
-
         // Create a MockHandler with an exception
         $mockHandler = new MockHandler([
             new \GuzzleHttp\Exception\RequestException(
@@ -66,7 +65,7 @@ class OpenAIClientTest extends TestCase
         $guzzleClient = new Client(['handler' => $handlerStack]);
 
         // Instantiate the OpenAIClient with the mocked Guzzle client
-        $client = new OpenAIClient($apiKey, $guzzleClient);
+        $client = new OpenAIClient($this->apiKey, $guzzleClient);
 
         // Expect an OpenAIClientException
         $this->expectException(OpenAIClientException::class);

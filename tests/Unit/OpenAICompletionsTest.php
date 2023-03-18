@@ -7,11 +7,12 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use PHPUnit\Framework\TestCase;
+use OpenAIUnitTestCase;
 use Webboy\OpenAiApiClient\Endpoints\OpenAICompletions;
 use Webboy\OpenAiApiClient\Exceptions\OpenAIClientException;
+use Webboy\OpenAiApiClient\Exceptions\OpenAIInvalidParameterException;
 
-class OpenAICompletionsTest extends TestCase
+class OpenAICompletionsTest extends OpenAIUnitTestCase
 {
     /**
      * @throws GuzzleException
@@ -19,8 +20,6 @@ class OpenAICompletionsTest extends TestCase
      */
     public function testCreateCompletion(): void
     {
-        $apiKey = 'test_api_key';
-
         $data_array = [
             'id' => 'test_completion_id',
             'object' => 'completion',
@@ -50,8 +49,13 @@ class OpenAICompletionsTest extends TestCase
         $handlerStack = HandlerStack::create($mock);
         $client = new Client(['handler' => $handlerStack]);
 
-        $completionsClient = new OpenAICompletions($apiKey, $client);
+        $completionsClient = new OpenAICompletions($this->apiKey, $client);
 
+        // Test with missing 'model' option
+        $this->expectException(OpenAIInvalidParameterException::class);
+        $completionsClient->create(['messages' => [['role' => 'system', 'content' => 'You are a helpful assistant.']]]);
+
+        // Test with a valid request
         $options['model']   = 'text-davinci-002';
         $options['prompt']  = 'Once upon a time';
 
