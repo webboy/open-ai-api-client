@@ -4,10 +4,12 @@ namespace Webboy\OpenAiApiClient\Endpoints;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Webboy\OpenAiApiClient\Endpoints\Interfaces\EndpointCreateInterface;
 use Webboy\OpenAiApiClient\Exceptions\OpenAIClientException;
+use Webboy\OpenAiApiClient\Exceptions\OpenAIInvalidParameterException;
 use Webboy\OpenAiApiClient\OpenAIClient;
 
-class OpenAICompletions extends OpenAIClient
+class OpenAICompletions extends OpenAIClient implements EndpointCreateInterface
 {
 
     /**
@@ -20,20 +22,22 @@ class OpenAICompletions extends OpenAIClient
     }
 
     /**
-     * @param string $model
      * @param array $options
      * @return array
      * @throws GuzzleException
      * @throws OpenAIClientException
      */
-    public function createCompletion(
-        string            $model,
-        array            $options = []
-    ): array
+    public function create(array $options  = []): array
     {
+        // Check if required options are present
+        if (!isset($options['model'])) {
+            throw new OpenAIInvalidParameterException('The "model" option is required.');
+        }
+
         $endpoint = 'completions';
 
         $allowedOptions = [
+            'model',
             'prompt',
             'max_tokens',
             'temperature',
@@ -53,11 +57,6 @@ class OpenAICompletions extends OpenAIClient
         // Filter options to only include allowed keys
         $filteredOptions = array_intersect_key($options, array_flip($allowedOptions));
 
-        $data = array_merge(
-            ['model' => $model],
-            $filteredOptions
-        );
-
-        return $this->sendRequest('POST', $endpoint, $data);
+        return $this->sendRequest('POST', $endpoint, $filteredOptions);
     }
 }

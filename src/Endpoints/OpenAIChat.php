@@ -3,9 +3,10 @@
 namespace Webboy\OpenAiApiClient\Endpoints;
 
 use GuzzleHttp\Client;
+use Webboy\OpenAiApiClient\Endpoints\Interfaces\EndpointCreateInterface;
 use Webboy\OpenAiApiClient\OpenAIClient;
 
-class OpenAIChat extends OpenAIClient
+class OpenAIChat extends OpenAIClient implements EndpointCreateInterface
 {
 
     public function __construct(string $apiKey, ?Client $client = null)
@@ -13,7 +14,7 @@ class OpenAIChat extends OpenAIClient
         parent::__construct($apiKey, $client);
     }
     
-    public function create(array $data): array
+    public function create(array $options): array
     {
         // TODO: Implement create() method.
     }

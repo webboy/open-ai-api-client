@@ -52,10 +52,10 @@ class OpenAICompletionsTest extends TestCase
 
         $completionsClient = new OpenAICompletions($apiKey, $client);
 
-        $model = 'text-davinci-002';
-        $options['prompt'] = 'Once upon a time';
+        $options['model']   = 'text-davinci-002';
+        $options['prompt']  = 'Once upon a time';
 
-        $response = $completionsClient->createCompletion($model, $options);
+        $response = $completionsClient->create($options);
 
         $this->assertIsArray($response);
         $this->assertArrayHasKey('id', $response);
