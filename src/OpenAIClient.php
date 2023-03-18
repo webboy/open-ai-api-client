@@ -10,20 +10,22 @@ use Webboy\OpenAiApiClient\Exceptions\OpenAIClientException;
 
 class OpenAIClient
 {
-    private string $apiKey;
+
     protected string $baseUrl = 'https://api.openai.com/v1/';
     protected Client $client;
 
-    public function __construct($apiKey, ?Client $client = null)
+    public function __construct(
+        private string $apiKey,
+        ?Client $client = null
+    )
     {
-        $this->apiKey = $apiKey;
         $this->client = $client ?? new Client(['base_uri' => $this->baseUrl]);
     }
 
     /**
      * @throws Exception|GuzzleException
      */
-    protected function sendRequest($method, $endpoint, $data = [])
+    public function sendRequest($method, $endpoint, $data = [])
     {
         $headers = [
             'Content-Type' => 'application/json',
@@ -39,7 +41,7 @@ class OpenAIClient
 
             return json_decode($response->getBody(), true);
         } catch (RequestException $e) {
-            throw new OpenAIClientException("Error: API request failed with status code " . $e->getMessage());
+            throw new OpenAIClientException($e->getMessage());
         }
     }
 }
