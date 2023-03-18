@@ -1,13 +1,13 @@
 <?php
 
-namespace Unit;
+namespace Tests\Unit;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use OpenAIUnitTestCase;
+use Tests\OpenAIUnitTestCase;
 use Webboy\OpenAiApiClient\Endpoints\OpenAIModels;
 use Webboy\OpenAiApiClient\Exceptions\OpenAIClientException;
 

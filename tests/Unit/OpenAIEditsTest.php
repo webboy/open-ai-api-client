@@ -1,8 +1,8 @@
 <?php
-namespace Unit;
+namespace Tests\Unit;
 
 use GuzzleHttp\Exception\GuzzleException;
-use OpenAIUnitTestCase;
+use Tests\OpenAIUnitTestCase;
 use Webboy\OpenAiApiClient\Endpoints\OpenAIEdits;
 use Webboy\OpenAiApiClient\Exceptions\OpenAIClientException;
 use Webboy\OpenAiApiClient\Exceptions\OpenAIInvalidParameterException;
