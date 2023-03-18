@@ -1,0 +1,22 @@
+{
+    "name": "webboy/open-ai-api-client",
+    "description": "PHP client for the OpenAI API",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Webboy\\OpenAiApiClient\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Nemanja Milenkovic",
+            "email": "extramedia.nemanja@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^8.0",
+        "guzzlehttp/guzzle": "^7.5@dev",
+        "ext-json": "*"
+    }
+}
