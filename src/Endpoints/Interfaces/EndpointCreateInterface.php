@@ -4,5 +4,5 @@ namespace Webboy\OpenAiApiClient\Endpoints\Interfaces;
 
 interface EndpointCreateInterface
 {
-    function create(array $options):array;
+    public function create(array $options): array;
 }

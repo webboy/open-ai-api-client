@@ -59,7 +59,7 @@ class OpenAIFineTunes extends OpenAIClient implements
      * @throws GuzzleException
      * @throws OpenAIClientException
      */
-    function list(): array
+    public function list(): array
     {
         $endpoint = 'fine-tunes';
         return $this->sendRequest('GET', $endpoint);
@@ -71,7 +71,7 @@ class OpenAIFineTunes extends OpenAIClient implements
      */
     public function get(string $id): array
     {
-        $endpoint = 'fine-tunes/'.$id;
+        $endpoint = 'fine-tunes/' . $id;
         return $this->sendRequest('GET', $endpoint);
     }
 
@@ -81,7 +81,7 @@ class OpenAIFineTunes extends OpenAIClient implements
      */
     public function cancel(string $id): array
     {
-        $endpoint = 'fine-tunes/'.$id.'/cancel';
+        $endpoint = 'fine-tunes/' . $id . '/cancel';
         return $this->sendRequest('POST', $endpoint);
     }
 
@@ -91,7 +91,7 @@ class OpenAIFineTunes extends OpenAIClient implements
      */
     public function events(string $id): array
     {
-        $endpoint = 'fine-tunes/'.$id.'/events';
+        $endpoint = 'fine-tunes/' . $id . '/events';
         return $this->sendRequest('GET', $endpoint);
     }
 
@@ -101,9 +101,7 @@ class OpenAIFineTunes extends OpenAIClient implements
      */
     public function delete(string $id): array
     {
-        $endpoint = 'models/'.$id;
+        $endpoint = 'models/' . $id;
         return $this->sendRequest('DELETE', $endpoint);
     }
-
-
 }

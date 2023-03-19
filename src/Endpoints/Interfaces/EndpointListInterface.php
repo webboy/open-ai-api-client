@@ -4,5 +4,5 @@ namespace Webboy\OpenAiApiClient\Endpoints\Interfaces;
 
 interface EndpointListInterface
 {
-    function list():array;
+    public function list(): array;
 }

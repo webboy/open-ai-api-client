@@ -17,7 +17,7 @@ class OpenAIChat extends OpenAIClient implements EndpointCreateInterface
      * @throws GuzzleException
      * @throws OpenAIClientException
      */
-    public function create(array $options  = []): array
+    public function create(array $options = []): array
     {
         // Check if required options are present
         if (!isset($options['model'])) {

@@ -4,5 +4,5 @@ namespace Webboy\OpenAiApiClient\Endpoints\Interfaces;
 
 interface EndpointTranslationsInterface
 {
-    public function translations(array $options):array;
+    public function translations(array $options): array;
 }

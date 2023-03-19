@@ -11,14 +11,13 @@ use Webboy\OpenAiApiClient\OpenAIClient;
 
 class OpenAICompletions extends OpenAIClient implements EndpointCreateInterface
 {
-
     /**
      * @param array $options
      * @return array
      * @throws GuzzleException
      * @throws OpenAIClientException
      */
-    public function create(array $options  = []): array
+    public function create(array $options = []): array
     {
         // Check if required options are present
         if (!isset($options['model'])) {

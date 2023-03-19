@@ -9,7 +9,7 @@ use Webboy\OpenAiApiClient\Endpoints\Interfaces\EndpointListInterface;
 use Webboy\OpenAiApiClient\Exceptions\OpenAIClientException;
 use Webboy\OpenAiApiClient\OpenAIClient;
 
-class OpenAIModels extends OpenAIClient implements EndpointGetInterface,EndpointListInterface
+class OpenAIModels extends OpenAIClient implements EndpointGetInterface, EndpointListInterface
 {
     /**
      * @throws GuzzleException|OpenAIClientException
@@ -25,7 +25,7 @@ class OpenAIModels extends OpenAIClient implements EndpointGetInterface,Endpoint
      */
     public function get(string $id): array
     {
-        $endpoint = 'models/'.$id;
+        $endpoint = 'models/' . $id;
         return $this->sendRequest('GET', $endpoint);
     }
 }

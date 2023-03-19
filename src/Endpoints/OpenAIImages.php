@@ -15,7 +15,6 @@ class OpenAIImages extends OpenAIClient implements
     EndpointVariationsInterface,
     EndpointEditsInterface
 {
-
     /**
      * @throws GuzzleException
      * @throws OpenAIClientException

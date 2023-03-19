@@ -4,5 +4,5 @@ namespace Webboy\OpenAiApiClient\Endpoints\Interfaces;
 
 interface EndpointGetInterface
 {
-    public function get(string $id):array;
+    public function get(string $id): array;
 }

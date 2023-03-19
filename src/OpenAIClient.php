@@ -9,7 +9,6 @@ use Webboy\OpenAiApiClient\Exceptions\OpenAIClientException;
 
 class OpenAIClient
 {
-
     protected string $baseUrl = 'https://api.openai.com/v1/';
     protected Client $client;
 
@@ -26,8 +25,7 @@ class OpenAIClient
     public function __construct(
         private string $apiKey,
         ?Client $client = null
-    )
-    {
+    ) {
         $this->client = $client ?? new Client(['base_uri' => $this->baseUrl]);
     }
 

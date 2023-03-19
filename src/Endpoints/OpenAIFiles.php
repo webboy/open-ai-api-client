@@ -19,7 +19,6 @@ class OpenAIFiles extends OpenAIClient implements
     EndpointGetInterface,
     EndpointContentInterface
 {
-
     /**
      * @throws GuzzleException
      * @throws OpenAIClientException
@@ -49,7 +48,7 @@ class OpenAIFiles extends OpenAIClient implements
      */
     public function delete(string $id): array
     {
-        $endpoint = 'files/'.$id;
+        $endpoint = 'files/' . $id;
 
         return $this->sendRequest('DELETE', $endpoint);
     }
@@ -60,7 +59,7 @@ class OpenAIFiles extends OpenAIClient implements
      */
     public function get(string $id): array
     {
-        $endpoint = 'files/'.$id;
+        $endpoint = 'files/' . $id;
 
         return $this->sendRequest('GET', $endpoint);
     }
@@ -82,7 +81,7 @@ class OpenAIFiles extends OpenAIClient implements
      */
     public function content(string $id): array
     {
-        $endpoint = 'files/'.$id.'/content';
+        $endpoint = 'files/' . $id . '/content';
 
         return $this->sendRequest('GET', $endpoint);
     }

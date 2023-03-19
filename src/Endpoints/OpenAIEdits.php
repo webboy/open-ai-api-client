@@ -11,7 +11,6 @@ use Webboy\OpenAiApiClient\OpenAIClient;
 
 class OpenAIEdits extends OpenAIClient implements EndpointCreateInterface
 {
-
     /**
      * @param array $options
      * @return array
@@ -45,4 +44,3 @@ class OpenAIEdits extends OpenAIClient implements EndpointCreateInterface
         return $this->sendRequest('POST', $endpoint, $filteredOptions);
     }
 }
-
