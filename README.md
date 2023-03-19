@@ -15,7 +15,7 @@ You can install the package via Composer:
 composer require webboy/open-ai-api-client
 ```
 
-## Usage
+## Usage examples
 
 First, create an instance of the `OpenAIClient` class with your API key:
 
@@ -25,7 +25,7 @@ use Webboy\OpenAiApiClient\OpenAIClient;
 $apiKey = 'your_api_key_here';
 $client = new OpenAIClient($apiKey);
 ```
-## List Models
+### List Models
 To get a list of available models:
 
 ```php
@@ -37,7 +37,7 @@ $response = $models->list();
 print_r($response);
 ```
 
-## Get Model
+### Get Model
 To get information about a specific model:
 
 ```php
@@ -47,7 +47,7 @@ print_r($response);
 
 ```
 
-## Create Completion
+### Create Completion
 To create a completion using the OpenAI API:
 
 ```php
