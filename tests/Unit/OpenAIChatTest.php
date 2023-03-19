@@ -53,4 +53,17 @@ class OpenAIChatTest extends OpenAIUnitTestCase
         $this->expectException(OpenAIInvalidParameterException::class);
         $openAIChat->create();
     }
+
+    /**
+     * @throws GuzzleException
+     * @throws OpenAIClientException
+     */
+    public function testMoreException()
+    {
+        $openAIEmbeddings = new OpenAIChat($this->apiKey);
+
+        // Test with missing 'input' option
+        $this->expectException(OpenAIInvalidParameterException::class);
+        $openAIEmbeddings->create(['model' => 'some-model']);
+    }
 }

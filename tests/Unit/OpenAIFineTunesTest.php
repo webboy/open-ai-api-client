@@ -73,4 +73,104 @@ class OpenAIFineTunesTest extends OpenAIUnitTestCase
             $response
         );
     }
+
+    /**
+     * @throws GuzzleException
+     * @throws OpenAIClientException
+     */
+    public function testListFineTunes(): void
+    {
+        $mockResponse = [
+            'object' => 'list',
+            'data' => [
+                [
+                    'id' => 'fine_tune_id',
+                    'object' => 'fine_tune',
+                    'created' => time(),
+                    'status' => 'enqueued',
+                ],
+            ],
+        ];
+
+        $guzzleClient = $this->prepareMockGuzzleClient($mockResponse);
+        $openAIFineTunes = new OpenAIFineTunes($this->apiKey, $guzzleClient);
+
+        $response = $openAIFineTunes->list();
+
+        $this->assertSame($mockResponse, $response);
+    }
+
+    /**
+     * @throws GuzzleException
+     * @throws OpenAIClientException
+     */
+    public function testCancelFineTune(): void
+    {
+        $fineTuneID = 'fine_tune_id';
+
+        $mockResponse = [
+            'id' => $fineTuneID,
+            'object' => 'fine_tune',
+            'created' => time(),
+            'status' => 'cancelled',
+        ];
+
+        $guzzleClient = $this->prepareMockGuzzleClient($mockResponse);
+        $openAIFineTunes = new OpenAIFineTunes($this->apiKey, $guzzleClient);
+
+        $response = $openAIFineTunes->cancel($fineTuneID);
+
+        $this->assertSame($mockResponse, $response);
+    }
+
+    /**
+     * @throws GuzzleException
+     * @throws OpenAIClientException
+     */
+    public function testEvents(): void
+    {
+        $fineTuneID = 'fine_tune_id';
+
+        $mockResponse = [
+            'object' => 'list',
+            'data' => [
+                [
+                    'id' => 'event_id',
+                    'object' => 'event',
+                    'created' => time(),
+                    'event_type' => 'example_event',
+                ],
+            ],
+        ];
+
+        $guzzleClient = $this->prepareMockGuzzleClient($mockResponse);
+        $openAIFineTunes = new OpenAIFineTunes($this->apiKey, $guzzleClient);
+
+        $response = $openAIFineTunes->events($fineTuneID);
+
+        $this->assertSame($mockResponse, $response);
+    }
+
+    /**
+     * @throws GuzzleException
+     * @throws OpenAIClientException
+     */
+    public function testDeleteFineTune(): void
+    {
+        $fineTuneID = 'fine_tune_id';
+
+        $mockResponse = [
+            'id' => $fineTuneID,
+            'object' => 'fine_tune',
+            'created' => time(),
+            'status' => 'deleted',
+        ];
+
+        $guzzleClient = $this->prepareMockGuzzleClient($mockResponse);
+        $openAIFineTunes = new OpenAIFineTunes($this->apiKey, $guzzleClient);
+
+        $response = $openAIFineTunes->delete($fineTuneID);
+
+        $this->assertSame($mockResponse, $response);
+    }
 }

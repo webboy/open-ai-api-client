@@ -9,6 +9,7 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Client\ClientExceptionInterface;
+use ReflectionException;
 use Tests\OpenAIUnitTestCase;
 use Webboy\OpenAiApiClient\Exceptions\OpenAIClientException;
 use Webboy\OpenAiApiClient\OpenAIClient;
@@ -67,5 +68,56 @@ class OpenAIClientTest extends OpenAIUnitTestCase
 
         // Call the sendRequest method
         $client->sendRequest('GET', 'test/endpoint');
+    }
+
+    /**
+     * @return void
+     * @throws ReflectionException
+     */
+    public function testSetTimeout(): void
+    {
+        $client = new OpenAIClient($this->apiKey);
+
+        $timeout = 5.0;
+        $client->setTimeout($timeout);
+
+        $clientProperty = (new \ReflectionClass($client))->getProperty('timeout');
+        $clientProperty->setAccessible(true);
+
+        $this->assertSame($timeout, $clientProperty->getValue($client));
+    }
+
+    /**
+     * @return void
+     * @throws ReflectionException
+     */
+    public function testSetConnectTimeout(): void
+    {
+        $client = new OpenAIClient($this->apiKey);
+
+        $connectTimeout = 10.0;
+        $client->setConnectTimeout($connectTimeout);
+
+        $clientProperty = (new \ReflectionClass($client))->getProperty('connectTimeout');
+        $clientProperty->setAccessible(true);
+
+        $this->assertSame($connectTimeout, $clientProperty->getValue($client));
+    }
+
+    /**
+     * @return void
+     * @throws ReflectionException
+     */
+    public function testSetHttpErrors(): void
+    {
+        $client = new OpenAIClient($this->apiKey);
+
+        $httpErrors = false;
+        $client->setHttpErrors($httpErrors);
+
+        $clientProperty = (new \ReflectionClass($client))->getProperty('httpErrors');
+        $clientProperty->setAccessible(true);
+
+        $this->assertSame($httpErrors, $clientProperty->getValue($client));
     }
 }

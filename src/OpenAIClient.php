@@ -2,7 +2,6 @@
 
 namespace Webboy\OpenAiApiClient;
 
-use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
@@ -19,6 +18,8 @@ class OpenAIClient
     protected bool $httpErrors = true;
 
     /**
+     * OpenAIClient constructor.
+     *
      * @param string $apiKey
      * @param Client|null $client
      */
@@ -31,6 +32,8 @@ class OpenAIClient
     }
 
     /**
+     * Set the request timeout.
+     *
      * @param float $timeout
      * @return OpenAIClient
      */
@@ -42,6 +45,8 @@ class OpenAIClient
     }
 
     /**
+     * Set the connection timeout.
+     *
      * @param float $connectTimeout
      * @return OpenAIClient
      */
@@ -53,6 +58,8 @@ class OpenAIClient
     }
 
     /**
+     * Set whether to throw exceptions on HTTP errors.
+     *
      * @param bool $httpErrors
      * @return OpenAIClient
      */
@@ -65,6 +72,8 @@ class OpenAIClient
 
 
     /**
+     * Send an HTTP request to the specified endpoint with the given data.
+     *
      * @param $method
      * @param $endpoint
      * @param array $data
@@ -84,6 +93,9 @@ class OpenAIClient
             $response = $this->client->request($method, $endpoint, [
                 'headers' => $headers,
                 'json' => $data,
+                'timeout' => $this->timeout,
+                'connect_timeout' => $this->connectTimeout,
+                'http_errors' => $this->httpErrors,
             ]);
 
             return json_decode($response->getBody(), true);

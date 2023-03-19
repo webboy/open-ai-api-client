@@ -5,16 +5,19 @@
          cacheDirectory=".phpunit.cache"
          executionOrder="depends,defects"
          failOnRisky="true"
-         failOnWarning="true">
+         failOnWarning="true"
+         colors="true">
     <testsuites>
         <testsuite name="Unit">
             <directory suffix="Test.php">tests/Unit</directory>
         </testsuite>
     </testsuites>
-
     <coverage>
         <include>
             <directory suffix=".php">src</directory>
         </include>
+        <report>
+            <html outputDirectory="build/coverage/html"/>
+        </report>
     </coverage>
 </phpunit>

@@ -58,4 +58,17 @@ class OpenAIEditsTest extends OpenAIUnitTestCase
         $this->expectException(OpenAIInvalidParameterException::class);
         $openAIEdits->create(['instruction' => 'Fix any grammatical errors.']);
     }
+
+    /**
+     * @throws GuzzleException
+     * @throws OpenAIClientException
+     */
+    public function testMoreException()
+    {
+        $openAIEdits = new OpenAIEdits($this->apiKey);
+
+        // Test with missing 'instruction' option
+        $this->expectException(OpenAIInvalidParameterException::class);
+        $openAIEdits->create(['model' => 'some-model']);
+    }
 }

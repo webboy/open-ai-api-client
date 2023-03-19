@@ -5,6 +5,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use Tests\OpenAIUnitTestCase;
 use Webboy\OpenAiApiClient\Endpoints\OpenAIEmbeddings;
 use Webboy\OpenAiApiClient\Exceptions\OpenAIClientException;
+use Webboy\OpenAiApiClient\Exceptions\OpenAIInvalidParameterException;
 
 class OpenAIEmbeddingsTest extends OpenAIUnitTestCase
 {
@@ -48,5 +49,22 @@ class OpenAIEmbeddingsTest extends OpenAIUnitTestCase
         $this->assertArrayHasKey('data', $response);
         $this->assertArrayHasKey('model', $response);
         $this->assertArrayHasKey('usage', $response);
+
+        // Test with missing 'model' option
+        $this->expectException(OpenAIInvalidParameterException::class);
+        $openAIEmbeddings->create(['input' => 'Some input']);
+    }
+
+    /**
+     * @throws GuzzleException
+     * @throws OpenAIClientException
+     */
+    public function testMoreException()
+    {
+        $openAIEmbeddings = new OpenAIEmbeddings($this->apiKey);
+
+        // Test with missing 'input' option
+        $this->expectException(OpenAIInvalidParameterException::class);
+        $openAIEmbeddings->create(['model' => 'some-model']);
     }
 }
