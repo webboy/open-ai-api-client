@@ -2,11 +2,7 @@
 
 namespace Tests\Unit;
 
-use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
 use Tests\OpenAIUnitTestCase;
 use Webboy\OpenAiApiClient\Endpoints\OpenAIModels;
 use Webboy\OpenAiApiClient\Exceptions\OpenAIClientException;
@@ -18,26 +14,15 @@ class OpenAIModelsTest extends OpenAIUnitTestCase
      */
     public function testListModels(): void
     {
-        $data_array = [
+        $mockResponse = [
             'data' => [
                 ['id' => 'model_1', 'object' => 'model'],
                 ['id' => 'model_2', 'object' => 'model'],
             ],
         ];
 
-        // Create a mock response
-        $mockResponse = new Response(200, [], json_encode($data_array));
-
-        // Create a MockHandler and add the mock response
-        $mockHandler = new MockHandler([
-            $mockResponse,
-        ]);
-
-        // Create a HandlerStack with the mock handler
-        $handlerStack = HandlerStack::create($mockHandler);
-
         // Create a Guzzle client with the handler stack
-        $guzzleClient = new Client(['handler' => $handlerStack]);
+        $guzzleClient = $this->prepareMockGuzzleClient($mockResponse);
 
         // Instantiate the OpenAIModels with the mocked Guzzle client
         $modelsClient = new OpenAIModels($this->apiKey, $guzzleClient);
@@ -47,7 +32,7 @@ class OpenAIModelsTest extends OpenAIUnitTestCase
 
         // Assert that the response matches the expected result
         $this->assertSame(
-            $data_array,
+            $mockResponse,
             $response
         );
     }
@@ -60,24 +45,13 @@ class OpenAIModelsTest extends OpenAIUnitTestCase
         $apiKey = 'test_api_key';
         $modelId = 'model_1';
 
-        $data_array = [
+        $mockResponse = [
             'id' => $modelId,
             'object' => 'model',
         ];
 
-        // Create a mock response
-        $mockResponse = new Response(200, [], json_encode($data_array));
-
-        // Create a MockHandler and add the mock response
-        $mockHandler = new MockHandler([
-            $mockResponse,
-        ]);
-
-        // Create a HandlerStack with the mock handler
-        $handlerStack = HandlerStack::create($mockHandler);
-
         // Create a Guzzle client with the handler stack
-        $guzzleClient = new Client(['handler' => $handlerStack]);
+        $guzzleClient = $this->prepareMockGuzzleClient($mockResponse);
 
         // Instantiate the OpenAIModels with the mocked Guzzle client
         $modelsClient = new OpenAIModels($apiKey, $guzzleClient);
@@ -87,7 +61,7 @@ class OpenAIModelsTest extends OpenAIUnitTestCase
 
         // Assert that the response matches the expected result
         $this->assertSame(
-            $data_array,
+            $mockResponse,
             $response
         );
     }

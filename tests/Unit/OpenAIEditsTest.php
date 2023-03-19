@@ -15,15 +15,29 @@ class OpenAIEditsTest extends OpenAIUnitTestCase
      */
     public function testCreateEdit()
     {
-        $openAIEdits = new OpenAIEdits($this->apiKey);
+        $mockResponse = [
+            'id' => 'test_completion_id',
+            'object' => 'completion',
+            'created' => time(),
+            'model' => 'text-davinci-002',
+            'usage' => [
+                'prompt_tokens' => 10,
+                'completion_tokens' => 20,
+                'total_tokens' => 30,
+            ],
+            'choices' => [
+                [
+                    'text' => 'Once upon a time, there was a little village.',
+                    'index' => 0,
+                    'logprobs' => null,
+                    'finish_reason' => 'stop',
+                ],
+            ],
+        ];
 
-        // Test with missing 'model' option
-        $this->expectException(OpenAIInvalidParameterException::class);
-        $openAIEdits->create(['instruction' => 'Fix any grammatical errors.']);
+        $guzzleClient = $this->prepareMockGuzzleClient($mockResponse);
 
-        // Test with missing 'instruction' option
-        $this->expectException(OpenAIInvalidParameterException::class);
-        $openAIEdits->create(['model' => 'text-davinci-edit-001']);
+        $openAIEdits = new OpenAIEdits($this->apiKey,$guzzleClient);
 
         // Test with a valid request
         $options = [
@@ -39,5 +53,9 @@ class OpenAIEditsTest extends OpenAIUnitTestCase
         $this->assertArrayHasKey('created', $response);
         $this->assertArrayHasKey('model', $response);
         $this->assertArrayHasKey('usage', $response);
+
+        // Test with missing 'model' option
+        $this->expectException(OpenAIInvalidParameterException::class);
+        $openAIEdits->create(['instruction' => 'Fix any grammatical errors.']);
     }
 }

@@ -2,11 +2,7 @@
 
 namespace Tests\Unit;
 
-use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
 use Tests\OpenAIUnitTestCase;
 use Webboy\OpenAiApiClient\Endpoints\OpenAICompletions;
 use Webboy\OpenAiApiClient\Exceptions\OpenAIClientException;
@@ -15,12 +11,11 @@ use Webboy\OpenAiApiClient\Exceptions\OpenAIInvalidParameterException;
 class OpenAICompletionsTest extends OpenAIUnitTestCase
 {
     /**
-     * @throws GuzzleException
-     * @throws OpenAIClientException
+     * @throws OpenAIClientException|GuzzleException
      */
     public function testCreateCompletion(): void
     {
-        $data_array = [
+        $mockResponse = [
             'id' => 'test_completion_id',
             'object' => 'completion',
             'created' => time(),
@@ -40,24 +35,13 @@ class OpenAICompletionsTest extends OpenAIUnitTestCase
             ],
         ];
 
-        $mockResponse = json_encode($data_array);
+        $guzzleClient = $this->prepareMockGuzzleClient($mockResponse);
 
-        $mock = new MockHandler([
-            new Response(200, ['Content-Type' => 'application/json'], $mockResponse),
-        ]);
-
-        $handlerStack = HandlerStack::create($mock);
-        $client = new Client(['handler' => $handlerStack]);
-
-        $completionsClient = new OpenAICompletions($this->apiKey, $client);
-
-        // Test with missing 'model' option
-        $this->expectException(OpenAIInvalidParameterException::class);
-        $completionsClient->create(['messages' => [['role' => 'system', 'content' => 'You are a helpful assistant.']]]);
+        $completionsClient = new OpenAICompletions($this->apiKey, $guzzleClient);
 
         // Test with a valid request
-        $options['model']   = 'text-davinci-002';
-        $options['prompt']  = 'Once upon a time';
+        $options['model'] = 'text-davinci-002';
+        $options['prompt'] = 'Once upon a time';
 
         $response = $completionsClient->create($options);
 
@@ -76,6 +60,9 @@ class OpenAICompletionsTest extends OpenAIUnitTestCase
         $this->assertEquals('test_completion_id', $response['id']);
         $this->assertEquals('completion', $response['object']);
         $this->assertEquals('text-davinci-002', $response['model']);
+
+        // Test with missing 'model' option
+        $this->expectException(OpenAIInvalidParameterException::class);
+        $completionsClient->create(['messages' => [['role' => 'system', 'content' => 'You are a helpful assistant.']]]);
     }
 }
-

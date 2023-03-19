@@ -4,53 +4,50 @@ namespace Tests\Unit;
 
 use GuzzleHttp\Exception\GuzzleException;
 use Tests\OpenAIUnitTestCase;
-use Webboy\OpenAiApiClient\Endpoints\OpenAIChat;
+use Webboy\OpenAiApiClient\Endpoints\OpenAIModerations;
 use Webboy\OpenAiApiClient\Exceptions\OpenAIClientException;
 use Webboy\OpenAiApiClient\Exceptions\OpenAIInvalidParameterException;
 
-class OpenAIChatTest extends OpenAIUnitTestCase
+class OpenAIModerationsTest extends OpenAIUnitTestCase
 {
 
     /**
      * @throws OpenAIClientException
      * @throws GuzzleException
      */
-    public function testCreateChatCompletion()
+    public function testCreateModeration()
     {
         $mockResponse = [
-            'choices' => [],
+            'results' => [],
             'id' => 'mock-id',
-            'object' => 'chat.completion',
+            'object' => 'moderation.result',
             'created' => 1628612669,
-            'model' => 'gpt-3.5-turbo',
+            'model' => 'text-moderation-latest',
             'usage' => ['prompt_tokens' => 12, 'completion_tokens' => 0, 'total_tokens' => 12],
         ];
 
+        // Create a Guzzle client with the handler stack
         $guzzleClient = $this->prepareMockGuzzleClient($mockResponse);
 
-        // Instantiate the OpenAIChat with the mocked Guzzle client
-        $openAIChat = new OpenAIChat($this->apiKey, $guzzleClient);
+        // Instantiate the OpenAIModels with the mocked Guzzle client
+        $openAIModerations = new OpenAIModerations($this->apiKey, $guzzleClient);
 
         // Test with a valid request
         $options = [
-            'model' => 'gpt-3.5-turbo',
-            'messages' => [
-                ['role' => 'system', 'content' => 'You are a helpful assistant.'],
-                ['role' => 'user', 'content' => 'Who won the world series in 2020?']
-            ]
+            'input' => 'This is a test input.'
         ];
 
-        $response = $openAIChat->create($options);
+        $response = $openAIModerations->create($options);
 
-        $this->assertArrayHasKey('choices', $response);
+        $this->assertArrayHasKey('results', $response);
         $this->assertArrayHasKey('id', $response);
         $this->assertArrayHasKey('object', $response);
         $this->assertArrayHasKey('created', $response);
         $this->assertArrayHasKey('model', $response);
         $this->assertArrayHasKey('usage', $response);
 
-        // Test with missing 'model' option
+        // Test with missing 'input' option
         $this->expectException(OpenAIInvalidParameterException::class);
-        $openAIChat->create();
+        $openAIModerations->create();
     }
 }

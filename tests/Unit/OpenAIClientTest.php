@@ -4,9 +4,11 @@ namespace Tests\Unit;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\Request;
+use Psr\Http\Client\ClientExceptionInterface;
 use Tests\OpenAIUnitTestCase;
 use Webboy\OpenAiApiClient\Exceptions\OpenAIClientException;
 use Webboy\OpenAiApiClient\OpenAIClient;
@@ -16,27 +18,19 @@ class OpenAIClientTest extends OpenAIUnitTestCase
     /**
      * @throws GuzzleException
      * @throws OpenAIClientException
+     * @throws ClientExceptionInterface
      */
     public function testSendRequest(): void
     {
         // Create a mock response
-        $mockResponse = new Response(200, [], json_encode([
+        $mockResponse = [
             'message' => 'Success',
-        ]));
+        ];
 
-        // Create a MockHandler and add the mock response
-        $mockHandler = new MockHandler([
-            $mockResponse,
-        ]);
-
-        // Create a HandlerStack with the mock handler
-        $handlerStack = HandlerStack::create($mockHandler);
-
-        // Create a Guzzle client with the handler stack
-        $guzzleClient = new Client(['handler' => $handlerStack]);
+        $guzzleClient = $this->prepareMockGuzzleClient($mockResponse);
 
         // Instantiate the OpenAIClient with the mocked Guzzle client
-        $client = new OpenAIClient($this->apiKey, client: $guzzleClient);
+        $client = new OpenAIClient($this->apiKey,$guzzleClient);
 
         // Call the sendRequest method
         $response = $client->sendRequest('GET', 'test/endpoint');
@@ -52,9 +46,9 @@ class OpenAIClientTest extends OpenAIUnitTestCase
     {
         // Create a MockHandler with an exception
         $mockHandler = new MockHandler([
-            new \GuzzleHttp\Exception\RequestException(
+            new RequestException(
                 'API request failed with status code 500',
-                new \GuzzleHttp\Psr7\Request('GET', 'test/endpoint')
+                new Request('GET', 'test/endpoint')
             ),
         ]);
 
