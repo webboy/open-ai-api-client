@@ -11,11 +11,6 @@ use Webboy\OpenAiApiClient\OpenAIClient;
 
 class OpenAIModels extends OpenAIClient implements EndpointGetInterface,EndpointListInterface
 {
-    public function __construct(string $apiKey, ?Client $client = null)
-    {
-        parent::__construct($apiKey, $client);
-    }
-
     /**
      * @throws GuzzleException|OpenAIClientException
      */

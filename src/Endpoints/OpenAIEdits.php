@@ -11,14 +11,6 @@ use Webboy\OpenAiApiClient\OpenAIClient;
 
 class OpenAIEdits extends OpenAIClient implements EndpointCreateInterface
 {
-    /**
-     * @param string $apiKey
-     * @param Client|null $client
-     */
-    public function __construct(string $apiKey, ?Client $client = null)
-    {
-        parent::__construct($apiKey, $client);
-    }
 
     /**
      * @param array $options

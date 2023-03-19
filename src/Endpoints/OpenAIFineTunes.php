@@ -22,11 +22,6 @@ class OpenAIFineTunes extends OpenAIClient implements
     EndpointEventsInterface,
     EndpointDeleteInterface
 {
-    public function __construct(string $apiKey, ?Client $client = null)
-    {
-        parent::__construct($apiKey, $client);
-    }
-
     /**
      * @throws GuzzleException
      * @throws OpenAIClientException

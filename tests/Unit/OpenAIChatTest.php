@@ -48,22 +48,31 @@ class OpenAIChatTest extends OpenAIUnitTestCase
         $this->assertArrayHasKey('created', $response);
         $this->assertArrayHasKey('model', $response);
         $this->assertArrayHasKey('usage', $response);
-
-        // Test with missing 'model' option
-        $this->expectException(OpenAIInvalidParameterException::class);
-        $openAIChat->create();
     }
 
     /**
      * @throws GuzzleException
      * @throws OpenAIClientException
      */
-    public function testMoreException()
+    public function testMissingInputOption()
     {
-        $openAIEmbeddings = new OpenAIChat($this->apiKey);
+        $openAIChat = new OpenAIChat($this->apiKey);
 
         // Test with missing 'input' option
         $this->expectException(OpenAIInvalidParameterException::class);
-        $openAIEmbeddings->create(['model' => 'some-model']);
+        $openAIChat->create(['model' => 'some-model']);
+    }
+
+    /**
+     * @throws GuzzleException
+     * @throws OpenAIClientException
+     */
+    public function testMissingModelOption()
+    {
+        $openAIChat = new OpenAIChat($this->apiKey);
+
+        // Test with missing 'model' option
+        $this->expectException(OpenAIInvalidParameterException::class);
+        $openAIChat->create();
     }
 }
