@@ -26,7 +26,10 @@ class OpenAIClient
         private string $apiKey,
         ?Client $client = null
     ) {
-        $this->client = $client ?? new Client(['base_uri' => $this->baseUrl]);
+        $this->client = $client ?? new Client([
+            'base_uri'  => $this->baseUrl,
+            'verify'    => false
+        ]);
     }
 
     /**
@@ -88,13 +91,18 @@ class OpenAIClient
         ];
 
         try {
-            $response = $this->client->request($method, $endpoint, [
+            $options = [
                 'headers' => $headers,
-                'json' => $data,
                 'timeout' => $this->timeout,
                 'connect_timeout' => $this->connectTimeout,
                 'http_errors' => $this->httpErrors,
-            ]);
+            ];
+
+            if (!empty($data)){
+                $options['json']    = $data;
+            }
+
+            $response = $this->client->request($method, $endpoint, $options);
 
             return json_decode($response->getBody(), true);
         } catch (RequestException $e) {

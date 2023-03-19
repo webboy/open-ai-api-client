@@ -2,5 +2,6 @@
 /.idea/
 /.phpunit.cache/
 /build/
+/examples/
 infection-log.txt
 infection.json5
