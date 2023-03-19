@@ -37,7 +37,7 @@ class OpenAIImages extends OpenAIClient implements
             'user',
         ];
 
-        $filteredOptions = array_intersect_key($options, array_flip($allowedOptions));
+        $filteredOptions = $this->filterOptions($options, $allowedOptions);
 
         return $this->sendRequest('POST', $endpoint, $filteredOptions);
     }
@@ -69,7 +69,7 @@ class OpenAIImages extends OpenAIClient implements
             'user',
         ];
 
-        $filteredOptions = array_intersect_key($options, array_flip($allowedOptions));
+        $filteredOptions = $this->filterOptions($options, $allowedOptions);
 
         return $this->sendRequest('POST', $endpoint, $filteredOptions);
     }
@@ -95,7 +95,7 @@ class OpenAIImages extends OpenAIClient implements
             'user',
         ];
 
-        $filteredOptions = array_intersect_key($options, array_flip($allowedOptions));
+        $filteredOptions = $this->filterOptions($options, $allowedOptions);
 
         return $this->sendRequest('POST', $endpoint, $filteredOptions);
     }

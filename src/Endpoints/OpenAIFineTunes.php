@@ -50,7 +50,7 @@ class OpenAIFineTunes extends OpenAIClient implements
             'suffix',
         ];
 
-        $filteredOptions = array_intersect_key($options, array_flip($allowedOptions));
+        $filteredOptions = $this->filterOptions($options, $allowedOptions);
 
         return $this->sendRequest('POST', $endpoint, $filteredOptions);
     }

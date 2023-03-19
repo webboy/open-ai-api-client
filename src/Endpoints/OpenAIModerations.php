@@ -32,7 +32,7 @@ class OpenAIModerations extends OpenAIClient implements EndpointCreateInterface
         ];
 
         // Filter options to only include allowed keys
-        $filteredOptions = array_intersect_key($options, array_flip($allowedOptions));
+        $filteredOptions = $this->filterOptions($options, $allowedOptions);
 
         // Set default model if not provided
         if (!isset($filteredOptions['model'])) {

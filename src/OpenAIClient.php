@@ -103,4 +103,14 @@ class OpenAIClient
             throw new OpenAIClientException($e->getMessage());
         }
     }
+
+    /**
+     * @param array $options
+     * @param array $allowedOptions
+     * @return array
+     */
+    protected function filterOptions(array $options, array $allowedOptions): array
+    {
+        return array_intersect_key($options, array_flip($allowedOptions));
+    }
 }
