@@ -5,3 +5,4 @@
 /examples/
 infection-log.txt
 infection.json5
+examples/.env

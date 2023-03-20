@@ -20,7 +20,7 @@ class OpenAIFiles extends OpenAIClient implements
     EndpointContentInterface
 {
     /**
-     * @throws GuzzleException
+
      * @throws OpenAIClientException
      * @throws OpenAIInvalidParameterException
      */
@@ -43,7 +43,7 @@ class OpenAIFiles extends OpenAIClient implements
     }
 
     /**
-     * @throws GuzzleException
+
      * @throws OpenAIClientException
      */
     public function delete(string $id): array
@@ -54,7 +54,7 @@ class OpenAIFiles extends OpenAIClient implements
     }
 
     /**
-     * @throws GuzzleException
+
      * @throws OpenAIClientException
      */
     public function get(string $id): array
@@ -65,7 +65,7 @@ class OpenAIFiles extends OpenAIClient implements
     }
 
     /**
-     * @throws GuzzleException
+
      * @throws OpenAIClientException
      */
     public function list(): array
@@ -76,7 +76,7 @@ class OpenAIFiles extends OpenAIClient implements
     }
 
     /**
-     * @throws GuzzleException
+
      * @throws OpenAIClientException
      */
     public function content(string $id): array

@@ -23,7 +23,7 @@ class OpenAIFineTunes extends OpenAIClient implements
     EndpointDeleteInterface
 {
     /**
-     * @throws GuzzleException
+
      * @throws OpenAIClientException
      * @throws OpenAIInvalidParameterException
      */
@@ -56,7 +56,7 @@ class OpenAIFineTunes extends OpenAIClient implements
     }
 
     /**
-     * @throws GuzzleException
+
      * @throws OpenAIClientException
      */
     public function list(): array
@@ -66,7 +66,7 @@ class OpenAIFineTunes extends OpenAIClient implements
     }
 
     /**
-     * @throws GuzzleException
+
      * @throws OpenAIClientException
      */
     public function get(string $id): array
@@ -76,7 +76,7 @@ class OpenAIFineTunes extends OpenAIClient implements
     }
 
     /**
-     * @throws GuzzleException
+
      * @throws OpenAIClientException
      */
     public function cancel(string $id): array
@@ -86,7 +86,7 @@ class OpenAIFineTunes extends OpenAIClient implements
     }
 
     /**
-     * @throws GuzzleException
+
      * @throws OpenAIClientException
      */
     public function events(string $id): array
@@ -96,7 +96,7 @@ class OpenAIFineTunes extends OpenAIClient implements
     }
 
     /**
-     * @throws GuzzleException
+
      * @throws OpenAIClientException
      */
     public function delete(string $id): array

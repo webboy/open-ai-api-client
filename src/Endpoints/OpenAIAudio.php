@@ -14,7 +14,7 @@ class OpenAIAudio extends OpenAIClient implements
     EndpointTranslationsInterface
 {
     /**
-     * @throws GuzzleException
+
      * @throws OpenAIClientException
      * @throws OpenAIInvalidParameterException
      */
@@ -45,7 +45,7 @@ class OpenAIAudio extends OpenAIClient implements
     }
 
     /**
-     * @throws GuzzleException
+
      * @throws OpenAIClientException
      * @throws OpenAIInvalidParameterException
      */

@@ -16,7 +16,7 @@ class OpenAIImages extends OpenAIClient implements
     EndpointEditsInterface
 {
     /**
-     * @throws GuzzleException
+
      * @throws OpenAIClientException
      * @throws OpenAIInvalidParameterException
      */
@@ -42,7 +42,7 @@ class OpenAIImages extends OpenAIClient implements
     }
 
     /**
-     * @throws GuzzleException
+
      * @throws OpenAIClientException
      * @throws OpenAIInvalidParameterException
      */
@@ -74,7 +74,7 @@ class OpenAIImages extends OpenAIClient implements
     }
 
     /**
-     * @throws GuzzleException
+
      * @throws OpenAIClientException
      * @throws OpenAIInvalidParameterException
      */

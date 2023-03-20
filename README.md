@@ -2,6 +2,8 @@
 
 A simple PHP client for interacting with the OpenAI API. This package provides an easy way to use OpenAI's GPT models for tasks such as text generation and completion.
 
+This library is handy because it returns back a raw response as array which can then be used by any kind of adapter class.
+
 ## Requirements
 
 - PHP 8.0 or higher
@@ -17,54 +19,57 @@ composer require webboy/open-ai-api-client
 
 ## Usage examples
 
-First, create an instance of the `OpenAIClient` class with your API key:
+First, create an instance of the `Endpoint` classes with your API key:
 
 ```php
-use Webboy\OpenAiApiClient\OpenAIClient;
+require_once('vendor/autoload.php');
 
-$apiKey = 'your_api_key_here';
-$client = new OpenAIClient($apiKey);
-```
-### List Models
-To get a list of available models:
-
-```php
-use Webboy\OpenAiApiClient\Endpoints\OpenAIModels;
-
-$models = new OpenAIModels($apiKey);
-$response = $models->list();
-
-print_r($response);
-```
-
-### Get Model
-To get information about a specific model:
-
-```php
-$response = $models->get('model_id');
-
-print_r($response);
-
-```
-
-### Create Completion
-To create a completion using the OpenAI API:
-
-```php
+use Dotenv\Dotenv;
 use Webboy\OpenAiApiClient\Endpoints\OpenAICompletions;
+use Webboy\OpenAiApiClient\Exceptions\OpenAIClientException;
 
-$completions = new OpenAICompletions($apiKey);
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
-$options = [
-    'model' => 'text-davinci-002',
-    'prompt' => 'Once upon a time,',
-    'max_tokens' => 50,
-];
+$apiKey = $_ENV['OPENAI_API_KEY'];
 
-$response = $completions->createCompletion($options);
+$client = new OpenAICompletions($apiKey);
 
-print_r($response);
+$options['model']   = 'text-davinci-003';
+$options['prompt']  = 'What time is it?';
 
+try {
+    print_r($client->create($options));
+} catch (OpenAIClientException $exception) {
+    die('OpenAI error occured: '.$exception->getMessage());
+}
+```
+The above code will generate something like this:
+
+```text
+Array
+(
+    [id] => cmpl-6wAQB0aPhvbxMAyIdz98z8jpPeKdq
+    [object] => text_completion
+    [created] => 1679321103
+    [model] => text-davinci-003
+    [choices] => Array
+        (
+            [0] => Array
+                (
+                    [text] =>It is 6:25 PM.
+                    [index] => 0
+                    [logprobs] =>
+                    [finish_reason] => stop
+                )
+        )
+    [usage] => Array
+        (
+            [prompt_tokens] => 5
+            [completion_tokens] => 9
+            [total_tokens] => 14
+        )
+)
 ```
 
 ## Testing

@@ -79,7 +79,6 @@ class OpenAIClient
      * @param $endpoint
      * @param array $data
      * @return mixed
-     * @throws GuzzleException
      * @throws OpenAIClientException
      */
     public function sendRequest($method, $endpoint, array $data = []): mixed
@@ -98,7 +97,7 @@ class OpenAIClient
                 'http_errors' => $this->httpErrors,
             ];
 
-            if (!empty($data)){
+            if (!empty($data)) {
                 $options['json']    = $data;
             }
 
@@ -106,6 +105,8 @@ class OpenAIClient
 
             return json_decode($response->getBody(), true);
         } catch (RequestException $e) {
+            throw new OpenAIClientException($e->getMessage());
+        } catch (GuzzleException $e) {
             throw new OpenAIClientException($e->getMessage());
         }
     }

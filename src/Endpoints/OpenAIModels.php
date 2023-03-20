@@ -12,7 +12,7 @@ use Webboy\OpenAiApiClient\OpenAIClient;
 class OpenAIModels extends OpenAIClient implements EndpointGetInterface, EndpointListInterface
 {
     /**
-     * @throws GuzzleException|OpenAIClientException
+     |OpenAIClientException
      */
     public function list(): array
     {
@@ -21,7 +21,7 @@ class OpenAIModels extends OpenAIClient implements EndpointGetInterface, Endpoin
     }
 
     /**
-     * @throws GuzzleException|OpenAIClientException
+     |OpenAIClientException
      */
     public function get(string $id): array
     {
