@@ -1,6 +1,8 @@
 # PHP OpenAI API Client
 
-A simple PHP client for interacting with the OpenAI API. This package provides an easy way to use OpenAI's GPT models for tasks such as text generation and completion.
+A simple community-maintained PHP client library for interacting with the OpenAI API. This package provides an easy way to use OpenAI's GPT models for tasks such as text generation and completion.
+
+Please note that this is an unofficial library.
 
 This library is handy because it returns back a raw response as array which can then be used by any kind of adapter class.
 
