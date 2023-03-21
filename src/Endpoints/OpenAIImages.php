@@ -2,7 +2,6 @@
 
 namespace Webboy\OpenAiApiClient\Endpoints;
 
-use GuzzleHttp\Exception\GuzzleException;
 use Webboy\OpenAiApiClient\Exceptions\OpenAIClientException;
 use Webboy\OpenAiApiClient\Exceptions\OpenAIInvalidParameterException;
 use Webboy\OpenAiApiClient\OpenAIClient;

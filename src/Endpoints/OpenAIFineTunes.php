@@ -2,8 +2,6 @@
 
 namespace Webboy\OpenAiApiClient\Endpoints;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
 use Webboy\OpenAiApiClient\Endpoints\Interfaces\EndpointCancelInterface;
 use Webboy\OpenAiApiClient\Endpoints\Interfaces\EndpointCreateInterface;
 use Webboy\OpenAiApiClient\Endpoints\Interfaces\EndpointDeleteInterface;

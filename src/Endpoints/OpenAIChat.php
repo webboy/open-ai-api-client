@@ -2,8 +2,6 @@
 
 namespace Webboy\OpenAiApiClient\Endpoints;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
 use Webboy\OpenAiApiClient\Endpoints\Interfaces\EndpointCreateInterface;
 use Webboy\OpenAiApiClient\Exceptions\OpenAIClientException;
 use Webboy\OpenAiApiClient\Exceptions\OpenAIInvalidParameterException;
@@ -14,7 +12,6 @@ class OpenAIChat extends OpenAIClient implements EndpointCreateInterface
     /**
      * @param array $options
      * @return array
-
      * @throws OpenAIClientException
      */
     public function create(array $options = []): array
