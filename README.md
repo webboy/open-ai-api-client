@@ -75,7 +75,8 @@ Array
 ```
 
 ## Testing
-Just rune PHPUnit tests:
+Endpoint classes are created to accept HTTP client as a parameter, which enables mocking tests to be performed without making real API calls. If you need to make real API calls, feel free to create a testuit.
+To run PHPUnit tests:
 
 ```php
 ./vendor/bin/phpunit
