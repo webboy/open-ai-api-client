@@ -3,7 +3,7 @@
     "description": "PHP client for the OpenAI API",
     "type": "library",
     "license": "MIT",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "autoload": {
         "psr-4": {
             "Webboy\\OpenAiApiClient\\": "src/"

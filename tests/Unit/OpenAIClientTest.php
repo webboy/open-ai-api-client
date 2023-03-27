@@ -64,7 +64,7 @@ class OpenAIClientTest extends OpenAIUnitTestCase
 
         // Expect an OpenAIClientException
         $this->expectException(OpenAIClientException::class);
-        $this->expectExceptionMessage(OpenAIClientException::class.': API request failed with status code 500');
+        $this->expectExceptionMessage('API request failed with status code 500');
 
         // Call the sendRequest method
         $client->sendRequest('GET', 'test/endpoint');

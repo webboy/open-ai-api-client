@@ -9,6 +9,6 @@ class OpenAIClientException extends Exception
 {
     public function __construct(string $message = "", int $code = 0, ?Throwable $previous = null)
     {
-        parent::__construct(self::class . ': ' . $message, $code, $previous);
+        parent::__construct($message, $code, $previous);
     }
 }

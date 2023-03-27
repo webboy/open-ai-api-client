@@ -104,9 +104,7 @@ class OpenAIClient
             $response = $this->client->request($method, $endpoint, $options);
 
             return json_decode($response->getBody(), true);
-        } catch (RequestException $e) {
-            throw new OpenAIClientException($e->getMessage());
-        } catch (GuzzleException $e) {
+        } catch (RequestException | GuzzleException $e) {
             throw new OpenAIClientException($e->getMessage());
         }
     }
