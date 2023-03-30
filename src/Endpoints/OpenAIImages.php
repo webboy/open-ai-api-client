@@ -39,9 +39,9 @@ class OpenAIImages extends OpenAIClient implements
             'user',
         ];
 
-        $filteredOptions = $this->filterOptions($options, $allowedOptions);
+        $filteredOptions = $this->filterOptions(options: $options, allowedOptions: $allowedOptions);
 
-        return $this->sendRequest('POST', $endpoint, $filteredOptions);
+        return $this->sendRequest(method: 'POST', endpoint: $endpoint, data: $filteredOptions);
     }
 
     #[ThrowsAttribute(
@@ -74,9 +74,9 @@ class OpenAIImages extends OpenAIClient implements
             'user',
         ];
 
-        $filteredOptions = $this->filterOptions($options, $allowedOptions);
+        $filteredOptions = $this->filterOptions(options: $options, allowedOptions: $allowedOptions);
 
-        return $this->sendRequest('POST', $endpoint, $filteredOptions);
+        return $this->sendRequest(method: 'POST', endpoint: $endpoint, data: $filteredOptions);
     }
 
     #[ThrowsAttribute(
@@ -103,8 +103,8 @@ class OpenAIImages extends OpenAIClient implements
             'user',
         ];
 
-        $filteredOptions = $this->filterOptions($options, $allowedOptions);
+        $filteredOptions = $this->filterOptions(options: $options, allowedOptions: $allowedOptions);
 
-        return $this->sendRequest('POST', $endpoint, $filteredOptions);
+        return $this->sendRequest(method: 'POST', endpoint: $endpoint, data: $filteredOptions);
     }
 }

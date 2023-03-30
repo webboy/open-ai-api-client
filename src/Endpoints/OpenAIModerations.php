@@ -33,13 +33,13 @@ class OpenAIModerations extends OpenAIClient implements EndpointCreateInterface
         ];
 
         // Filter options to only include allowed keys
-        $filteredOptions = $this->filterOptions($options, $allowedOptions);
+        $filteredOptions = $this->filterOptions(options: $options, allowedOptions: $allowedOptions);
 
         // Set default model if not provided
         if (!isset($filteredOptions['model'])) {
             $filteredOptions['model'] = 'text-moderation-latest';
         }
 
-        return $this->sendRequest('POST', $endpoint, $filteredOptions);
+        return $this->sendRequest(method: 'POST', endpoint: $endpoint, data: $filteredOptions);
     }
 }

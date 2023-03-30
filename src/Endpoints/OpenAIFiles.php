@@ -38,11 +38,11 @@ class OpenAIFiles extends OpenAIClient implements
         }
 
         $allowedOptions = ['file', 'purpose'];
-        $filteredOptions = $this->filterOptions($options, $allowedOptions);
+        $filteredOptions = $this->filterOptions(options: $options, allowedOptions: $allowedOptions);
 
         $endpoint = 'files';
 
-        return $this->sendRequest('POST', $endpoint, $filteredOptions);
+        return $this->sendRequest(method: 'POST', endpoint: $endpoint, data: $filteredOptions);
     }
 
     #[ThrowsAttribute(
