@@ -2,6 +2,7 @@
 
 namespace Webboy\OpenAiApiClient\Endpoints;
 
+use Webboy\OpenAiApiClient\Attributes\ThrowsAttribute;
 use Webboy\OpenAiApiClient\Exceptions\OpenAIClientException;
 use Webboy\OpenAiApiClient\Exceptions\OpenAIInvalidParameterException;
 use Webboy\OpenAiApiClient\OpenAIClient;
@@ -12,19 +13,22 @@ class OpenAIAudio extends OpenAIClient implements
     EndpointTranscriptionsInterface,
     EndpointTranslationsInterface
 {
-    /**
-
-     * @throws OpenAIClientException
-     * @throws OpenAIInvalidParameterException
-     */
+    #[ThrowsAttribute(
+        exceptionClass: OpenAIClientException::class,
+        description: 'In case of client exception'
+    )]
+    #[ThrowsAttribute(
+        exceptionClass: OpenAIInvalidParameterException::class,
+        description: 'If required options are missing'
+    )]
     public function transcriptions(array $options): array
     {
         if (!isset($options['file'])) {
-            throw new OpenAIInvalidParameterException('The "file" option is required.');
+            throw new OpenAIInvalidParameterException(message: 'The "file" option is required.');
         }
 
         if (!isset($options['model'])) {
-            throw new OpenAIInvalidParameterException('The "model" option is required.');
+            throw new OpenAIInvalidParameterException(message: 'The "model" option is required.');
         }
 
         $endpoint = 'audio/transcriptions';
@@ -38,24 +42,27 @@ class OpenAIAudio extends OpenAIClient implements
             'language'
         ];
 
-        $filteredOptions = $this->filterOptions($options, $allowedOptions);
+        $filteredOptions = $this->filterOptions(options: $options, allowedOptions: $allowedOptions);
 
-        return $this->sendRequest('POST', $endpoint, $filteredOptions);
+        return $this->sendRequest(method: 'POST', endpoint: $endpoint, data: $filteredOptions);
     }
 
-    /**
-
-     * @throws OpenAIClientException
-     * @throws OpenAIInvalidParameterException
-     */
+    #[ThrowsAttribute(
+        exceptionClass: OpenAIClientException::class,
+        description: 'In case of client exception'
+    )]
+    #[ThrowsAttribute(
+        exceptionClass: OpenAIInvalidParameterException::class,
+        description: 'If required options are missing'
+    )]
     public function translations(array $options): array
     {
         if (!isset($options['file'])) {
-            throw new OpenAIInvalidParameterException('The "file" option is required.');
+            throw new OpenAIInvalidParameterException(message: 'The "file" option is required.');
         }
 
         if (!isset($options['model'])) {
-            throw new OpenAIInvalidParameterException('The "model" option is required.');
+            throw new OpenAIInvalidParameterException(message: 'The "model" option is required.');
         }
 
         $endpoint = 'audio/translations';
@@ -68,8 +75,8 @@ class OpenAIAudio extends OpenAIClient implements
             'temperature'
         ];
 
-        $filteredOptions = $this->filterOptions($options, $allowedOptions);
+        $filteredOptions = $this->filterOptions(options: $options, allowedOptions: $allowedOptions);
 
-        return $this->sendRequest('POST', $endpoint, $filteredOptions);
+        return $this->sendRequest(method: 'POST', endpoint: $endpoint, data: $filteredOptions);
     }
 }

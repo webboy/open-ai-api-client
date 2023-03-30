@@ -2,6 +2,7 @@
 
 namespace Webboy\OpenAiApiClient\Endpoints;
 
+use Webboy\OpenAiApiClient\Attributes\ThrowsAttribute;
 use Webboy\OpenAiApiClient\Exceptions\OpenAIClientException;
 use Webboy\OpenAiApiClient\Exceptions\OpenAIInvalidParameterException;
 use Webboy\OpenAiApiClient\OpenAIClient;
@@ -14,11 +15,14 @@ class OpenAIImages extends OpenAIClient implements
     EndpointVariationsInterface,
     EndpointEditsInterface
 {
-    /**
-
-     * @throws OpenAIClientException
-     * @throws OpenAIInvalidParameterException
-     */
+    #[ThrowsAttribute(
+        exceptionClass: OpenAIClientException::class,
+        description: 'In case of client exception'
+    )]
+    #[ThrowsAttribute(
+        exceptionClass: OpenAIInvalidParameterException::class,
+        description: 'If required options are missing'
+    )]
     public function generations(array $options): array
     {
         if (!isset($options['prompt'])) {
@@ -40,11 +44,14 @@ class OpenAIImages extends OpenAIClient implements
         return $this->sendRequest('POST', $endpoint, $filteredOptions);
     }
 
-    /**
-
-     * @throws OpenAIClientException
-     * @throws OpenAIInvalidParameterException
-     */
+    #[ThrowsAttribute(
+        exceptionClass: OpenAIClientException::class,
+        description: 'In case of client exception'
+    )]
+    #[ThrowsAttribute(
+        exceptionClass: OpenAIInvalidParameterException::class,
+        description: 'If required options are missing'
+    )]
     public function edits(array $options): array
     {
         if (!isset($options['image'])) {
@@ -72,11 +79,14 @@ class OpenAIImages extends OpenAIClient implements
         return $this->sendRequest('POST', $endpoint, $filteredOptions);
     }
 
-    /**
-
-     * @throws OpenAIClientException
-     * @throws OpenAIInvalidParameterException
-     */
+    #[ThrowsAttribute(
+        exceptionClass: OpenAIClientException::class,
+        description: 'In case of client exception'
+    )]
+    #[ThrowsAttribute(
+        exceptionClass: OpenAIInvalidParameterException::class,
+        description: 'If required options are missing'
+    )]
     public function variations(array $options): array
     {
         if (!isset($options['image'])) {

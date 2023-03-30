@@ -5,6 +5,8 @@ namespace Webboy\OpenAiApiClient;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
+use Webboy\OpenAiApiClient\Attributes\MethodDescriptionAttribute;
+use Webboy\OpenAiApiClient\Attributes\ThrowsAttribute;
 use Webboy\OpenAiApiClient\Exceptions\OpenAIClientException;
 
 class OpenAIClient
@@ -14,13 +16,7 @@ class OpenAIClient
     protected float $connectTimeout = 0.0;
     protected bool $httpErrors = true;
 
-    /**
-     * OpenAIClient constructor.
-     *
-     * @param string $apiKey
-     * @param Client|null $client
-     * @param string $baseUrl
-     */
+    #[MethodDescriptionAttribute(description: 'OpenAI constructor')]
     public function __construct(
         private string $apiKey,
         ?Client $client = null,
@@ -32,12 +28,7 @@ class OpenAIClient
         ]);
     }
 
-    /**
-     * Set the request timeout.
-     *
-     * @param float $timeout
-     * @return OpenAIClient
-     */
+    #[MethodDescriptionAttribute(description: 'Set the request timeout.')]
     public function setTimeout(float $timeout): self
     {
         $this->timeout = $timeout;
@@ -45,12 +36,7 @@ class OpenAIClient
         return $this;
     }
 
-    /**
-     * Set the connection timeout.
-     *
-     * @param float $connectTimeout
-     * @return OpenAIClient
-     */
+    #[MethodDescriptionAttribute(description: 'Set the connection timeout.')]
     public function setConnectTimeout(float $connectTimeout): self
     {
         $this->connectTimeout = $connectTimeout;
@@ -58,12 +44,7 @@ class OpenAIClient
         return $this;
     }
 
-    /**
-     * Set whether to throw exceptions on HTTP errors.
-     *
-     * @param bool $httpErrors
-     * @return OpenAIClient
-     */
+    #[MethodDescriptionAttribute(description: 'Set whether to throw exceptions on HTTP errors.')]
     public function setHttpErrors(bool $httpErrors): self
     {
         $this->httpErrors = $httpErrors;
@@ -71,18 +52,13 @@ class OpenAIClient
         return $this;
     }
 
-
-    /**
-     * Send an HTTP request to the specified endpoint with the given data.
-     *
-     * @param $method
-     * @param $endpoint
-     * @param array $data
-     * @return mixed
-     * @throws OpenAIClientException
-     */
-    public function sendRequest($method, $endpoint, array $data = []): mixed
-    {
+    #[MethodDescriptionAttribute(description: 'Send an HTTP request to the specified endpoint with the given data.')]
+    #[ThrowsAttribute(OpenAIClientException::class, 'In case of client exception')]
+    public function sendRequest(
+        $method,
+        $endpoint,
+        array $data = []
+    ): mixed {
         $headers = [
             'Content-Type' => 'application/json',
             'Accept' => 'application/json',
@@ -101,7 +77,11 @@ class OpenAIClient
                 $options['json']    = $data;
             }
 
-            $response = $this->client->request($method, $endpoint, $options);
+            $response = $this->client->request(
+                method: $method,
+                uri: $endpoint,
+                options: $options
+            );
 
             return json_decode($response->getBody(), true);
         } catch (RequestException | GuzzleException $e) {
@@ -109,13 +89,11 @@ class OpenAIClient
         }
     }
 
-    /**
-     * @param array $options
-     * @param array $allowedOptions
-     * @return array
-     */
-    protected function filterOptions(array $options, array $allowedOptions): array
-    {
+    #[MethodDescriptionAttribute(description: 'Filter the input array options')]
+    protected function filterOptions(
+        array $options,
+        array $allowedOptions
+    ): array {
         return array_intersect_key($options, array_flip($allowedOptions));
     }
 }

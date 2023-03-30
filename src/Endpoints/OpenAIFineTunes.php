@@ -2,6 +2,7 @@
 
 namespace Webboy\OpenAiApiClient\Endpoints;
 
+use Webboy\OpenAiApiClient\Attributes\ThrowsAttribute;
 use Webboy\OpenAiApiClient\Endpoints\Interfaces\EndpointCancelInterface;
 use Webboy\OpenAiApiClient\Endpoints\Interfaces\EndpointCreateInterface;
 use Webboy\OpenAiApiClient\Endpoints\Interfaces\EndpointDeleteInterface;
@@ -20,11 +21,14 @@ class OpenAIFineTunes extends OpenAIClient implements
     EndpointEventsInterface,
     EndpointDeleteInterface
 {
-    /**
-
-     * @throws OpenAIClientException
-     * @throws OpenAIInvalidParameterException
-     */
+    #[ThrowsAttribute(
+        exceptionClass: OpenAIClientException::class,
+        description: 'In case of client exception'
+    )]
+    #[ThrowsAttribute(
+        exceptionClass: OpenAIInvalidParameterException::class,
+        description: 'If required options are missing'
+    )]
     public function create(array $options = []): array
     {
         if (!isset($options['training_file'])) {
@@ -53,50 +57,70 @@ class OpenAIFineTunes extends OpenAIClient implements
         return $this->sendRequest('POST', $endpoint, $filteredOptions);
     }
 
-    /**
-
-     * @throws OpenAIClientException
-     */
+    #[ThrowsAttribute(
+        exceptionClass: OpenAIClientException::class,
+        description: 'In case of client exception'
+    )]
+    #[ThrowsAttribute(
+        exceptionClass: OpenAIInvalidParameterException::class,
+        description: 'If required options are missing'
+    )]
     public function list(): array
     {
         $endpoint = 'fine-tunes';
         return $this->sendRequest('GET', $endpoint);
     }
 
-    /**
-
-     * @throws OpenAIClientException
-     */
+    #[ThrowsAttribute(
+        exceptionClass: OpenAIClientException::class,
+        description: 'In case of client exception'
+    )]
+    #[ThrowsAttribute(
+        exceptionClass: OpenAIInvalidParameterException::class,
+        description: 'If required options are missing'
+    )]
     public function get(string $id): array
     {
         $endpoint = 'fine-tunes/' . $id;
         return $this->sendRequest('GET', $endpoint);
     }
 
-    /**
-
-     * @throws OpenAIClientException
-     */
+    #[ThrowsAttribute(
+        exceptionClass: OpenAIClientException::class,
+        description: 'In case of client exception'
+    )]
+    #[ThrowsAttribute(
+        exceptionClass: OpenAIInvalidParameterException::class,
+        description: 'If required options are missing'
+    )]
     public function cancel(string $id): array
     {
         $endpoint = 'fine-tunes/' . $id . '/cancel';
         return $this->sendRequest('POST', $endpoint);
     }
 
-    /**
-
-     * @throws OpenAIClientException
-     */
+    #[ThrowsAttribute(
+        exceptionClass: OpenAIClientException::class,
+        description: 'In case of client exception'
+    )]
+    #[ThrowsAttribute(
+        exceptionClass: OpenAIInvalidParameterException::class,
+        description: 'If required options are missing'
+    )]
     public function events(string $id): array
     {
         $endpoint = 'fine-tunes/' . $id . '/events';
         return $this->sendRequest('GET', $endpoint);
     }
 
-    /**
-
-     * @throws OpenAIClientException
-     */
+    #[ThrowsAttribute(
+        exceptionClass: OpenAIClientException::class,
+        description: 'In case of client exception'
+    )]
+    #[ThrowsAttribute(
+        exceptionClass: OpenAIInvalidParameterException::class,
+        description: 'If required options are missing'
+    )]
     public function delete(string $id): array
     {
         $endpoint = 'models/' . $id;

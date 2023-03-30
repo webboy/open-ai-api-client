@@ -2,6 +2,7 @@
 
 namespace Webboy\OpenAiApiClient\Endpoints;
 
+use Webboy\OpenAiApiClient\Attributes\ThrowsAttribute;
 use Webboy\OpenAiApiClient\Endpoints\Interfaces\EndpointContentInterface;
 use Webboy\OpenAiApiClient\Endpoints\Interfaces\EndpointCreateInterface;
 use Webboy\OpenAiApiClient\Endpoints\Interfaces\EndpointDeleteInterface;
@@ -18,11 +19,14 @@ class OpenAIFiles extends OpenAIClient implements
     EndpointGetInterface,
     EndpointContentInterface
 {
-    /**
-
-     * @throws OpenAIClientException
-     * @throws OpenAIInvalidParameterException
-     */
+    #[ThrowsAttribute(
+        exceptionClass: OpenAIClientException::class,
+        description: 'In case of client exception'
+    )]
+    #[ThrowsAttribute(
+        exceptionClass: OpenAIInvalidParameterException::class,
+        description: 'If required options are missing'
+    )]
     public function create(array $options): array
     {
         if (!isset($options['file'])) {
@@ -41,10 +45,14 @@ class OpenAIFiles extends OpenAIClient implements
         return $this->sendRequest('POST', $endpoint, $filteredOptions);
     }
 
-    /**
-
-     * @throws OpenAIClientException
-     */
+    #[ThrowsAttribute(
+        exceptionClass: OpenAIClientException::class,
+        description: 'In case of client exception'
+    )]
+    #[ThrowsAttribute(
+        exceptionClass: OpenAIInvalidParameterException::class,
+        description: 'If required options are missing'
+    )]
     public function delete(string $id): array
     {
         $endpoint = 'files/' . $id;
@@ -52,10 +60,14 @@ class OpenAIFiles extends OpenAIClient implements
         return $this->sendRequest('DELETE', $endpoint);
     }
 
-    /**
-
-     * @throws OpenAIClientException
-     */
+    #[ThrowsAttribute(
+        exceptionClass: OpenAIClientException::class,
+        description: 'In case of client exception'
+    )]
+    #[ThrowsAttribute(
+        exceptionClass: OpenAIInvalidParameterException::class,
+        description: 'If required options are missing'
+    )]
     public function get(string $id): array
     {
         $endpoint = 'files/' . $id;
@@ -63,10 +75,14 @@ class OpenAIFiles extends OpenAIClient implements
         return $this->sendRequest('GET', $endpoint);
     }
 
-    /**
-
-     * @throws OpenAIClientException
-     */
+    #[ThrowsAttribute(
+        exceptionClass: OpenAIClientException::class,
+        description: 'In case of client exception'
+    )]
+    #[ThrowsAttribute(
+        exceptionClass: OpenAIInvalidParameterException::class,
+        description: 'If required options are missing'
+    )]
     public function list(): array
     {
         $endpoint = 'files';
@@ -74,10 +90,14 @@ class OpenAIFiles extends OpenAIClient implements
         return $this->sendRequest('GET', $endpoint);
     }
 
-    /**
-
-     * @throws OpenAIClientException
-     */
+    #[ThrowsAttribute(
+        exceptionClass: OpenAIClientException::class,
+        description: 'In case of client exception'
+    )]
+    #[ThrowsAttribute(
+        exceptionClass: OpenAIInvalidParameterException::class,
+        description: 'If required options are missing'
+    )]
     public function content(string $id): array
     {
         $endpoint = 'files/' . $id . '/content';
